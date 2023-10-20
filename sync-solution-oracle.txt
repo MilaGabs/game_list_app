@@ -1,0 +1,101 @@
+Manter a sincronia em tempo real entre um banco de dados Oracle e um banco MongoDB pode ser um desafio, pois esses são sistemas de banco de dados diferentes, 
+com estruturas e modelos de dados distintos. No entanto, é possível realizar a sincronização em tempo real entre eles, dependendo dos requisitos do seu projeto.
+Aqui estão algumas abordagens que você pode considerar:
+
+1. **CDC (Change Data Capture) e ETL (Extract, Transform, Load)**:
+   - Use ferramentas de CDC para capturar alterações no banco de dados Oracle em tempo real.
+   - Transforme esses dados para o formato compatível com o MongoDB.
+   - Carregue os dados transformados no MongoDB.
+   - Essa abordagem pode ser implementada usando ferramentas ETL, como Apache Nifi, Apache Kafka, ou ferramentas personalizadas.
+
+2. **Replicação de Dados**:
+   - Configure a replicação de dados a partir do Oracle para o MongoDB. Alguns bancos de dados Oracle oferecem recursos de replicação.
+   - Certifique-se de que os dados replicados sejam transformados e ajustados conforme necessário antes de serem inseridos no MongoDB.
+
+3. **Aplicação de Log de Transações**:
+   - Configure um mecanismo de aplicação de log de transações do Oracle que rastreie todas as alterações de dados.
+   - Desenvolva um processo que leia o log de transações e aplique essas alterações no MongoDB.
+
+4. **Ferramentas de Terceiros**:
+   - Explore ferramentas de terceiros, como o MongoDB Connector for Oracle, que podem facilitar a integração e sincronização entre o Oracle e o MongoDB.
+
+5. **Microserviços e Mensageria**:
+   - Crie microserviços que manipulem a sincronização entre os dois bancos de dados.
+   - Use sistemas de mensageria, como RabbitMQ ou Apache Kafka, para transmitir e gerenciar eventos de sincronização.
+
+6. **Arquitetura de Event Sourcing**:
+   - Implemente uma arquitetura de Event Sourcing, na qual todas as mudanças no Oracle são registradas como eventos.
+   - Use esses eventos para atualizar o MongoDB de acordo.
+
+Lembre-se de que a escolha da abordagem depende dos requisitos específicos do seu projeto, como a velocidade de sincronização,
+a complexidade dos dados e a disponibilidade de recursos. Além disso, é importante considerar as implicações de desempenho e escalabilidade ao implementar
+qualquer solução de sincronização em tempo real entre bancos de dados diferentes.
+
+==================================================================================================================================================================
+
+É possivel usar o GoldenGate?
+
+Sim, o Oracle GoldenGate é uma excelente opção para manter a sincronia em tempo real entre um banco de dados Oracle e outro banco de dados,
+incluindo bancos de dados NoSQL, como o MongoDB. O Oracle GoldenGate é uma solução de replicação de dados de alto desempenho desenvolvida pela Oracle 
+que é projetada para capturar, transformar e entregar dados de forma eficiente e em tempo real.
+
+Aqui está como você pode usar o Oracle GoldenGate para sincronizar um banco de dados Oracle com o MongoDB:
+
+1. **Instalação e Configuração**:
+   - Instale e configure o Oracle GoldenGate no banco de dados Oracle.
+   - Configure o Oracle GoldenGate para capturar as mudanças nos dados no Oracle, o que inclui inserções, atualizações e exclusões.
+
+2. **Transformação de Dados (Opcional)**:
+   - Se necessário, configure transformações nos dados capturados para adaptá-los ao formato e à estrutura do MongoDB. Isso pode incluir a conversão de tipos de dados, 
+   a remoção de colunas desnecessárias, etc.
+
+3. **Entrega dos Dados**:
+   - Configure o Oracle GoldenGate para entregar os dados transformados ou não transformados em tempo real ao MongoDB.
+   - É possível usar o Oracle GoldenGate para transmitir as alterações diretamente para uma aplicação intermediária ou usar adaptadores específicos para o MongoDB.
+
+4. **Configuração no MongoDB**:
+   - Certifique-se de ter uma estrutura de dados adequada no MongoDB para receber os dados replicados do Oracle.
+
+5. **Monitoramento e Tolerância a Falhas**:
+   - Implemente um sistema de monitoramento para garantir que a replicação esteja ocorrendo conforme o esperado.
+   - Configure estratégias de recuperação e tolerância a falhas para garantir a disponibilidade contínua da replicação.
+
+O Oracle GoldenGate é uma solução robusta e comprovada para sincronização de dados em tempo real e pode lidar com cargas de trabalho intensivas e requisitos complexos. 
+No entanto, é importante considerar os custos associados à licença do Oracle GoldenGate, bem como a complexidade da configuração e manutenção do sistema. 
+Certifique-se de planejar e dimensionar adequadamente a solução de acordo com as necessidades do seu projeto.
+
+==================================================================================================================================================================
+
+É possivel instalar em servidor local?
+
+Sim, é possível instalar o Oracle GoldenGate em um servidor Oracle on-premise. Na verdade, uma das configurações mais comuns para o Oracle GoldenGate é ter tanto o
+banco de dados de origem (por exemplo, Oracle Database) quanto o destino (por exemplo, outro Oracle Database ou outro banco de dados) em ambientes on-premise.
+
+Aqui estão os passos gerais para instalar o Oracle GoldenGate em um ambiente on-premise:
+
+1. **Preparação do Ambiente**:
+   - Garanta que você tenha um servidor adequado para instalar o Oracle GoldenGate, com os recursos de hardware e software necessários.
+
+2. **Download e Instalação**:
+   - Faça o download do software Oracle GoldenGate da Oracle Technology Network (OTN) ou do site oficial da Oracle.
+   - Siga as instruções de instalação fornecidas pela Oracle para instalar o Oracle GoldenGate no servidor.
+
+3. **Configuração**:
+   - Configure o Oracle GoldenGate para se conectar ao banco de dados de origem (Oracle Database) de onde você deseja replicar os dados.
+   - Defina os parâmetros de conexão, como nome de usuário, senha e informações de rede.
+
+4. **Configuração da Replicação**:
+   - Configure o Oracle GoldenGate para capturar as operações desejadas no banco de dados de origem.
+   - Especifique as tabelas, colunas e tipos de operações (inserção, atualização, exclusão) que você deseja replicar.
+
+5. **Configuração do Destino**:
+   - Configure o Oracle GoldenGate para se conectar ao banco de dados de destino (pode ser outro Oracle Database ou outro tipo de banco de dados).
+   - Especifique como os dados replicados devem ser transformados e carregados no banco de dados de destino.
+
+6. **Teste e Monitoramento**:
+   - Realize testes para garantir que a replicação esteja funcionando conforme o esperado.
+   - Implemente monitoramento para acompanhar o desempenho e a integridade da replicação em tempo real.
+
+Lembre-se de que a configuração do Oracle GoldenGate pode ser complexa, dependendo dos detalhes específicos do seu ambiente e dos requisitos de replicação.
+A Oracle fornece documentação detalhada e recursos de suporte para ajudá-lo a configurar e manter o Oracle GoldenGate em um ambiente on-premise.
+Certifique-se de seguir as diretrizes da Oracle e considerar os aspectos de segurança, desempenho e disponibilidade ao configurar a replicação.
